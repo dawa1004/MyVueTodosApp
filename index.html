@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>My Vue App</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- v-○○をディレクティブと呼ぶ。 -->
+  <div id="app" class="container">
+    <h1>
+      <button @click="purge">Purge</button>
+      My Todos
+      <span class="info">({{ remaining.length }}/{{ todos.length }})</span>
+    </h1>
+    <ul v-if="todos.length">
+      <li v-for="(todo, index) in todos"><!-- todos.length がtrueでこちらの処理-->
+        <input type="checkbox" v-model="todo.isDone"><!-- isDoneがtrueの時チェックされる -->
+        <!-- <span v-bind:class="{done: todo.isDone}">{{ todo.title }}</span>isDoneがtrueの時doneクラスを付ける -->
+        <span :class="{done: todo.isDone}">{{ todo.title }}</span><!-- isDoneがtrueの時doneクラスを付ける  v-bind: classのv-bindは省略可能-->
+        <span @click="deleteItem(index)" class="command">[x]</span>
+      </li>
+    </ul>
+    <ul v-else><!-- todos.length空配列がfalseだった場合メッセージ表示 -->
+      <li>Nothing to do, yay!</li>
+    </ul>
+    <!-- <form v-on:submit="addItem"> -->
+      <!-- v-onでイベントを仕込める @で省略できる -->
+    <form @submit.prevent="addItem"> <!-- .preventでページ遷移を無効 -->
+      <input type="text" v-model="newItem">
+      <input type="submit" value="Add">
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
